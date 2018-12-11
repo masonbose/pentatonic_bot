@@ -1,14 +1,6 @@
-'''
-    To-Do's:
-     - in if/else's below use dict reference like var[0]
-     - create a looping bot, only breaks program is user 
-       types in keyword
-     - give option to print full list of scales once 
-       major/minor is selected
-     - utilize f'strings if you can 
-'''
+#!/usr/bin/python3
 def ask_scale():
-    retry = 0 
+    retry = 0
     valid_scale = False
     print('\nHey there. I am a bot designed to output major or minor pentatonic scales based on user input.')
     while not valid_scale:
@@ -19,11 +11,12 @@ def ask_scale():
         elif response.startswith('m'):
             valid_scale = True
             scale = 'minor'
-        else: 
+        else:
             retry += 1
             if retry > 4:
                 raise SystemExit('Invalid scales entered. Too many retries.')
     return response[0]
+
 
 def pentatonic(scale):
     retry = 0
@@ -55,7 +48,7 @@ def pentatonic(scale):
         'mF#': ['F#, A, B, C#, E, F#'],
         'mG': ['G, Bb, C, D, F, G'],
         'mG#': ['G#, B, C#, D#, F#, G#']}
-    
+
     print('Choose a root note. Add "#" for sharps, "b" for flats, or "-m" for minors.')
     while not valid_root:
         response = input("Note? ")
@@ -63,12 +56,13 @@ def pentatonic(scale):
         if root_note in 'ABCDEFG':
             sharp = 1 if '#' in response[1:] else 0
             flat = 1 if 'b' in response[1:] else 0
-            full_scale = '{}{}{}'.format(scale, root_note, '#' * sharp + 'b' * flat)
+            full_scale = '{}{}{}'.format(
+                scale, root_note, '#' * sharp + 'b' * flat)
             notes = pentatonic_scales.get(full_scale)
-            if notes: 
+            if notes:
                 valid_root = True
                 print('{} pentatonic scale for {} is {}'.
-                format('Major' if scale == 'M' else 'Minor',
+                      format('Major' if scale == 'M' else 'Minor',
                              full_scale[1:],
                              ', '.join(notes)))
             else:
@@ -78,9 +72,11 @@ def pentatonic(scale):
                 if retry > 4:
                     raise SystemExit('Invalid scale. Too many retries.')
 
+
 def main():
     scale = ask_scale()
     pentatonic(scale)
+
 
 if __name__ == '__main__':
     main()
